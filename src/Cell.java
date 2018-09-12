@@ -56,7 +56,7 @@ public class Cell {
     }
 
     public void setAns(int ans) {
-        if (ans > 0 && ans <= 10){
+        if (ans > 0 && ans <= 9){
             this.ans = ans;
         }
     }

@@ -2,14 +2,42 @@
 
 
 public class Solver {
-    private int[][] startconfig; // strating configuration of the puzzle
-    private Cell[][] cells;
+    private int[][] startconfig; // starting configuration of the puzzle
+    private Cell[][] cells; //
 
     public Solver(int[][] startconfig) {
         this.startconfig = startconfig;
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
                 cells[r][c] = new Cell(startconfig[r][c]);//sets
+            }
+        }
+    }
+
+    public void threeByThreeIliminator(int r, int c){
+        int whichBoxC = c/3; int whichBoxR = r/3;
+
+        if(!cells[r][c].isFinished()){
+            for (int row = whichBoxR*3; row < ((whichBoxR+1)*3); row++) {
+                for (int col = whichBoxC*3; col < ((whichBoxC+1)*3); col++) {
+                    if (cells[row][col].isFinished()){
+                        cells[r][c].remove(cells[row][col].getAns());
+                    }
+                }
+            }
+        }
+    }
+
+    public void threeByThreeChecker(int r, int c){
+        int whichBoxC = c/3; int whichBoxR = r/3;
+
+        if(cells[r][c].isFinished()){
+            for (int row = whichBoxR*3; row < ((whichBoxR+1)*3); row++) {
+                for (int col = whichBoxC*3; col < ((whichBoxC+1)*3); col++) {
+                    if (cells[row][col].isFinished()){
+                        cells[r][c].remove(cells[row][col].getAns());
+                    }
+                }
             }
         }
     }
@@ -43,7 +71,7 @@ public class Solver {
     public void rowChecker (int r, int c){
         boolean [] remaining = new boolean[9];//numbers remaining that aren't posibilities in other cells
         for (int i = 0; i < 9; i++) {
-            remaining[i] = cells[r][c].getPos()[i];// this is going to point tothe same peice of ram how do I get them to point to diffrent places?
+            remaining[i] = cells[r][c].getPos()[i];// this is going to point to the same piece of ram how do I get them to point to diffrent places?
         }
         for (int col = 0; col < 9; col++) {
             if (col != c && !cells[r][col].isFinished()){
