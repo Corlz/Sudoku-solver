@@ -14,7 +14,7 @@ public class Solver {
         }
     }
 
-    public void threeByThreeIliminator(int r, int c){
+    public void threeByThreeEliminator(int r, int c){
         int whichBoxC = c/3; int whichBoxR = r/3;
 
         if(!cells[r][c].isFinished()){
@@ -30,15 +30,37 @@ public class Solver {
 
     public void threeByThreeChecker(int r, int c){
         int whichBoxC = c/3; int whichBoxR = r/3;
+        boolean[] remaining = new boolean[9];
 
-        if(cells[r][c].isFinished()){
-            for (int row = whichBoxR*3; row < ((whichBoxR+1)*3); row++) {
-                for (int col = whichBoxC*3; col < ((whichBoxC+1)*3); col++) {
-                    if (cells[row][col].isFinished()){
-                        cells[r][c].remove(cells[row][col].getAns());
+        for (int i = 0; i < remaining.length; i++) {
+            remaining[i] = cells[r][c].getPos()[i];
+        }
+
+        if(!cells[r][c].isFinished()){
+            for (int i = 0; i < remaining.length; i++) {
+                for (int row = whichBoxR*3; row < ((whichBoxR+1)*3); row++) {
+                    for (int col = whichBoxC*3; col < ((whichBoxC+1)*3); col++) {
+                        if(cells[r][c]!= cells[row][col]){
+                            if(cells[row][col].getPos()[i]){
+                                remaining[i] = false;
+                            }
+                        }
                     }
                 }
             }
+        }
+        int numPos = 0;//number of posibilities left
+        int lastPos = -1; // most recent posibility
+        for (int i = 0; i < remaining.length; i++) {
+            if (remaining[i]){
+                numPos++;
+                lastPos = i;
+            }
+        }
+        if (numPos == 1){
+            cells[r][c].setAns(lastPos+1);
+            rowEliminate(r, c);
+            colEliminate(r, c);
         }
     }
 
