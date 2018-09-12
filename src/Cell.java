@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Cell {
-    boolean[] pos;//array of possibilities if one false it is no longer a possibility
-    int ans;//definite answer
-    boolean finished;
+    private boolean[] pos;//array of possibilities if one false it is no longer a possibility
+    private int ans;//definite answer
+    private boolean finished;
 
     public Cell(int ans) {
         if (ans > 0 && ans <= 9){
@@ -53,5 +53,11 @@ public class Cell {
 
     public boolean isFinished() {
         return finished;
+    }
+
+    public void setAns(int ans) {
+        if (ans > 0 && ans <= 10){
+            this.ans = ans;
+        }
     }
 }
