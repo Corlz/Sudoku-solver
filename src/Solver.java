@@ -71,10 +71,10 @@ public class Solver {
     public void rowChecker (int r, int c){
         boolean [] remaining = new boolean[9];//numbers remaining that aren't posibilities in other cells
         for (int i = 0; i < 9; i++) {
-            remaining[i] = cells[r][c].getPos()[i];// this is going to point to the same piece of ram how do I get them to point to diffrent places?
+            remaining[i] = cells[r][c].getPos()[i];
         }
-        for (int col = 0; col < 9; col++) {
-            if (col != c && !cells[r][col].isFinished()){
+        for (int col = 0; col < 9; col++) {//goes through the cells in that row
+            if (col != c && !cells[r][col].isFinished()){//if the cell it is check is not itself or isn't yet finished because it has already checked with finished cells in eliminator
                 for (int i = 0; i < 9; i++) {
                     if (cells[r][col].getPos()[i]){
                         remaining[i] = false;
@@ -92,6 +92,37 @@ public class Solver {
         }
         if (numPos == 1){
             cells[r][c].setAns(lastPos+1);
+            colEliminate(r,c);
+            threeByThreeIliminator(r,c);
+        }
+    }
+
+    public void colChecker (int r, int c){
+        boolean [] remaining = new boolean[9];//numbers remaining that aren't posibilities in other cells
+        for (int i = 0; i < 9; i++) {
+            remaining[i] = cells[r][c].getPos()[i];
+        }
+        for (int row = 0; row < 9; row++) {
+            if (row != r && !cells[row][c].isFinished()){
+                for (int i = 0; i < 9; i++) {
+                    if (cells[row][c].getPos()[i]){
+                        remaining[i] = false;
+                    }
+                }
+            }
+        }
+        int numPos = 0;//number of posibilities left
+        int lastPos = -1; // most recent posibility
+        for (int i = 0; i < remaining.length; i++) {
+            if (remaining[i]){
+                numPos++;
+                lastPos = i;
+            }
+        }
+        if (numPos == 1){
+            cells[r][c].setAns(lastPos+1);
+            colEliminate(r,c);
+            threeByThreeIliminator(r,c);
         }
     }
 }
