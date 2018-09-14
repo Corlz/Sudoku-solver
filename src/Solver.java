@@ -2,16 +2,51 @@
 
 
 public class Solver {
-    private int[][] startconfig; // starting configuration of the puzzle
     private Cell[][] cells; //
+    private int[][] endingConfig;
+    private int compFinished;
 
     public Solver(int[][] startconfig) {
-        this.startconfig = startconfig;
+        cells = new Cell[9][9];
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
-                cells[r][c] = new Cell(startconfig[r][c]);//sets
+                cells[r][c] = new Cell(startconfig[r][c]);
             }
         }
+        endingConfig = new int[9][9];
+    }
+
+    public int[][] masterMethod(){
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                threeByThreeEliminator(r, c);
+                rowEliminate(r, c);
+                colEliminate(r, c);
+            }
+        }
+
+        while(compFinished < 81){
+            compFinished = 0;
+            for (int r = 0; r < 9; r++) {
+                for (int c = 0; c < 9; c++) {
+                    threeByThreeChecker(r, c);
+                    rowChecker(r, c);
+                    colChecker(r, c);
+                    if(cells[r][c].isFinished()){
+                        compFinished++;
+                    }
+                }
+
+            }
+        }
+
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                endingConfig[r][c] = cells[r][c].getAns();
+            }
+        }
+
+        return endingConfig;
     }
 
     public void threeByThreeEliminator(int r, int c){
@@ -93,10 +128,10 @@ public class Solver {
     public void rowChecker (int r, int c){
         boolean [] remaining = new boolean[9];//numbers remaining that aren't posibilities in other cells
         for (int i = 0; i < 9; i++) {
-            remaining[i] = cells[r][c].getPos()[i];
+            remaining[i] = cells[r][c].getPos()[i];// this is going to point to the same piece of ram how do I get them to point to diffrent places?
         }
-        for (int col = 0; col < 9; col++) {//goes through the cells in that row
-            if (col != c && !cells[r][col].isFinished()){//if the cell it is check is not itself or isn't yet finished because it has already checked with finished cells in eliminator
+        for (int col = 0; col < 9; col++) {
+            if (col != c && !cells[r][col].isFinished()){
                 for (int i = 0; i < 9; i++) {
                     if (cells[r][col].getPos()[i]){
                         remaining[i] = false;
@@ -115,7 +150,7 @@ public class Solver {
         if (numPos == 1){
             cells[r][c].setAns(lastPos+1);
             colEliminate(r,c);
-            threeByThreeIliminator(r,c);
+            threeByThreeEliminator(r, c);
         }
     }
 
@@ -144,7 +179,7 @@ public class Solver {
         if (numPos == 1){
             cells[r][c].setAns(lastPos+1);
             colEliminate(r,c);
-            threeByThreeIliminator(r,c);
+            threeByThreeEliminator(r,c);
         }
     }
 }
