@@ -58,6 +58,16 @@ public class Cell {
     public void setAns(int ans) {
         if (ans > 0 && ans <= 9){
             this.ans = ans;
+            finished = true;
+        }
+    }
+
+    @Override
+    public String toString (){
+        if (isFinished()){
+            return "" + ans;
+        }else{
+            return "0";
         }
     }
 }
