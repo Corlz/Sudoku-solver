@@ -25,7 +25,7 @@ public class Solver {
             }
         }
 
-        while(compFinished < 81){
+        while(compFinished < 80){
             compFinished = 0;
             for (int r = 0; r < 9; r++) {
                 for (int c = 0; c < 9; c++) {
@@ -61,6 +61,7 @@ public class Solver {
                 }
             }
         }
+        //System.out.println(cells[r][c]);
     }
 
     public void threeByThreeChecker(int r, int c){

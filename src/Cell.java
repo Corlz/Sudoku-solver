@@ -6,6 +6,7 @@ public class Cell {
     private boolean finished;
 
     public Cell(int ans) {
+        pos = new boolean[9];
         if (ans > 0 && ans <= 9){
             this.ans = ans;
             finished =true;
