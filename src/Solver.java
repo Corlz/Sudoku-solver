@@ -61,7 +61,12 @@ public class Solver {
                 }
             }
         }
-        //System.out.println(cells[r][c]);
+        if (r==0 && c == 0){
+            for (int i = 0; i < 9; i++) {
+                System.out.print(cells[r][c].getPos()[i]+ " ");
+            }
+            System.out.println();
+        }
     }
 
     public void threeByThreeChecker(int r, int c){
@@ -111,6 +116,12 @@ public class Solver {
                 }
             }
         }
+        if (r==0 && c == 0){
+            for (int i = 0; i < 9; i++) {
+                System.out.print(cells[r][c].getPos()[i]+ " ");
+            }
+            System.out.println();
+        }
     }
 
     public void colEliminate(int r, int c){//eliminates the posibilities of the finished cells in that col
@@ -123,6 +134,12 @@ public class Solver {
                     row=9;
                 }
             }
+        }
+        if (r==0 && c == 0){
+            for (int i = 0; i < 9; i++) {
+                System.out.print(cells[r][c].getPos()[i]+ " ");
+            }
+            System.out.println();
         }
     }
 
