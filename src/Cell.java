@@ -9,7 +9,10 @@ public class Cell {
         pos = new boolean[9];
         if (ans > 0 && ans <= 9){
             this.ans = ans;
-            finished =true;
+            finished = true;
+            for (int i = 0; i < 9; i++) {
+                pos[i]= false;
+            }
         }else{
             start();
         }
@@ -31,9 +34,9 @@ public class Cell {
     public void remove(int i){//removes i from the list of possibilities and sets ans if there is only one possibility left.
         pos[i-1]=false;
         int done = 1;
-        int indexTrue = -1;
+        int indexTrue = -1;//index of answer
         for (int j = 0; j < pos.length; j++) {
-            if (pos[j]= true){
+            if (pos[j]){
                 done--;
                 indexTrue = j;
             }
@@ -49,7 +52,11 @@ public class Cell {
     }
 
     public int getAns() {
-        return ans;
+        if (isFinished()){
+            return ans;
+        }else{
+            return 0;
+        }
     }
 
     public boolean isFinished() {
@@ -61,6 +68,10 @@ public class Cell {
             this.ans = ans;
             finished = true;
         }
+        if (ans==0){
+            this.ans = ans;
+            finished = false;
+        }
     }
 
     @Override
@@ -68,7 +79,26 @@ public class Cell {
         if (isFinished()){
             return "" + ans;
         }else{
-            return "0";
+            String answer = "[";
+            for (int i = 0; i < pos.length; i++) {
+                if (pos[i]){
+                    answer +="T, ";
+                }else {
+                    answer += "F, ";
+                }
+            }
+            answer += "]";
+            return answer;
         }
+    }
+
+    private String numTrues(){
+        int a = 0;
+        for (boolean b :
+                pos) {
+            if(b)
+                a++;
+        }
+        return "" + a;
     }
 }

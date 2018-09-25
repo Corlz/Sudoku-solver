@@ -8,8 +8,29 @@ public class Main {
     string[] arr = line.split(" "); splits the string at spaces
      */
     public static void main(String[] args) {
-        Reader file = new Reader(1);
+        int [][] test = new int[9][9];
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                if (r==4 && c==4){
+                    test[r][c] = 1;
+                }else{
+                    test[r][c] = 0;
+                }
+            }
+        }
+        Reader file = new Reader(4);
         Solver solver = new Solver(file.getAns());
+
+        for (int r = 0; r < file.getAns().length; r++) {
+            for (int c = 0; c < file.getAns()[0].length; c++) {
+                System.out.print(file.getAns()[r][c] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+
+
         int[][] ans = solver.masterMethod();
         for (int r = 0; r < ans.length; r++) {
             for (int c = 0; c < ans[0].length; c++) {
@@ -17,5 +38,16 @@ public class Main {
             }
             System.out.println();
         }
+        System.out.println();
+        System.out.println();
+
+        for (int r = 0; r < ans.length; r++) {
+            for (int c = 0; c < ans[0].length; c++) {
+                System.out.print(solver.cells[r][c] + ", ");
+            }
+            System.out.println();
+        }
+
+        System.out.println(solver.checkAll());
     }
 }
